@@ -1,0 +1,8 @@
+1. Market Cap must be greater than 25000000
+2. total debt mst not exceed total cash in more than 30% the. 
+	2b. If total debt > total cash, then revenue must be > total debt. 
+3. 52 week change must be negative. 
+4. Shares Short cannot be greater than 10% of Float. 
+
+
+#Later, on Excel, filter by Beta and Float.
