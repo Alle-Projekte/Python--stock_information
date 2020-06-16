@@ -17,7 +17,7 @@ def tCashPercent(something):
     
 desktop = os.path.join(os.environ['USERPROFILE'], 'Desktop')
 os.chdir(desktop)
-wb = openpyxl.load_workbook('heyhey.xlsx')
+wb = openpyxl.load_workbook('test1.xlsx')
 wb.create_sheet('2ND')
 wb.create_sheet('3rd')
 sheet1 = wb.get_sheet_by_name('Sheet')

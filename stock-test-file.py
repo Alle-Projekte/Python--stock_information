@@ -1,70 +1,71 @@
 '''
-This is the 2nd-file of the program, there are a total of 3 
-that need to be put together. This checks for faulty stocks 
+This is the 2nd-file of the program, there are a total of 3
+that need to be put together. This checks for faulty stocks
 that populated with a date in B-column (faultyStocks()), and stocks
-that popu lated with "N/A" in b-column (noAnswer()). 
+that popu lated with "N/A" in b-column (noAnswer()).
 '''
 
 import pyperclip, openpyxl, re, os
 
 #Splits values with dots (.), ie.-(200.44M).
 def stringSplitr(something):
-	temp = re.compile('(\-*\d+\.\d+)(\w)')
-	res = temp.match(something).groups()
-	return res
+    temp = re.compile('(\-*\d+\.\d+)(\w)')
+    res = temp.match(something).groups()
+    return res
 
 #Splits values without dots (.), ie.-(200M).
 def simpleSplitr(something):
-	temp = re.compile('(\-*\d+)(\w)')
-	res = temp.match(something).groups()
-	return res
+    temp = re.compile('(\-*\d+)(\w)')
+    res = temp.match(something).groups()
+    return res
 
-#Compares cell value to check if it populated with a following format date (Marc 02, 2020).
+#Compares cell value to check if it populated with a following format date:
+# (Marc 02, 2020).
 def compare(something):
-	try:
-		if something == re.findall(r'(\w+ \d+\, \d+)', something)[0]:
-			return True
-	except IndexError or TypeError:
-		return False
+    try:
+        if something == re.findall(r'(\w+ \d+\, \d+)', something)[0]:
+            return True
+    except IndexError or TypeError:
+        return False
 
-#Performs the cell comparison through the compare() function to check for dates. 
+#Performs the cell comparison through the compare() function to check for dates.
 def faultyStocks():
-        stocks = []
-        count = 2
-        i = 1
-        while i < sheet1.max_row:
-                var = sheet1['B' + str(count)].value
-                if var == 'N/A':
-                        stocks.append(sheet1['A' + str(count)].value)
-                        print(sheet1['A' + str(count)].value)
-                elif compare(var) == True:
-                        stocks.append(sheet1['A' + str(count)].value)
-                        print(sheet1['A' + str(count)].value)
-                else:
-                        i += 1
-                        count += 1
-                        continue
-                i += 1
-                count += 1
-        return stocks
+    stocks = []
+    count = 2
+    i = 1
+    while i < sheet1.max_row:
+        var = sheet1['B' + str(count)].value
+        if var == 'N/A':
+            stocks.append(sheet1['A' + str(count)].value)
+            print(sheet1['A' + str(count)].value)
+        elif compare(var) == True:
+            stocks.append(sheet1['A' + str(count)].value)
+            print(sheet1['A' + str(count)].value)
+        else:
+            i += 1
+            count += 1
+            continue
+        i += 1
+        count += 1
+    return stocks
 
 #Performs the cell comparison to check if content is "N/A"
 def noAnswer():
-        letter = ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K']
-        counter = 0
+    letter = ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K']
+    counter = 0
+    i, count = 1, 2
+    while counter < len(letter):
+        while i < sheet1.max_row:
+            var1 = sheet1[letter[counter] + str(count)].value
+            if var1 == 'N/A':
+                sheet1[letter[counter] + str(count)].value = 0
+                count += 1
+                i += 1
+            else:
+                count += 1
+                i += 1
+        counter += 1
         i, count = 1, 2
-        while counter < len(letter):
-                while i < sheet1.max_row:
-                        var1 = sheet1[letter[counter] + str(count)].value
-                        if var1 == 'N/A':
-                                sheet1[letter[counter] + str(count)].value = 0
-                                count += 1
-                                i += 1
-                        else:
-                                count += 1
-                                i += 1
-                counter += 1
-                i, count = 1, 2
 
 desktop = os.path.join(os.environ['USERPROFILE'], 'Desktop')
 os.chdir(desktop)
@@ -79,10 +80,10 @@ lCounter = 0
 i, count = 1, 2
 
 if len(faultyStocks()) == 0:
-        print('No faulty stocks found.')
+    print('No faulty stocks found.')
 else:
-        print(faultyStocks())
-        
+    print(faultyStocks())
+
 while lCounter < 5:
 	while i < sheet1.max_row:
 		var1 = sheet1[letter[lCounter] + str(count)].value
