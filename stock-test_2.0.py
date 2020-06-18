@@ -61,6 +61,12 @@ def getList1Odd(something3):
 
     return list3
 
+def set_column_width(value=21.43):
+    letter = ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K']
+    counter = 0
+    for i in letter:
+        sheet.column_dimensions[i].width = value
+
 
 #Changes the current file path to your desktop.
 desktop = os.path.join(os.environ['USERPROFILE'], 'Desktop')
@@ -187,6 +193,8 @@ for m in lrv:
     except AttributeError:
         sheet.delete_rows(m - counter, 1)
         counter += 1
+
+set_column_width()
 
 #Saves the Excel workbook in the current directory
 wb.save('Test.xlsx')
