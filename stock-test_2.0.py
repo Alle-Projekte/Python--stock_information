@@ -67,6 +67,21 @@ def set_column_width(value=21.43):
     for i in letter:
         sheet.column_dimensions[i].width = value
 
+def convert_percent_to_num():
+    counter = 2
+    letter = ['G', 'I', 'J', 'K']
+    pattern = '(\-?\d+\.?\d+)(%)'
+    while counter <= sheet.max_row:
+        try:
+            i = 0
+            while i < len(letter):
+                result = re.findall(pattern, sheet[letter[i]+str(counter)].value)[0][0]
+                sheet[letter[i]+str(counter)].value = float(result)
+                i += 1
+            counter += 1
+        except:
+                counter +=1
+
 
 #Changes the current file path to your desktop.
 desktop = os.path.join(os.environ['USERPROFILE'], 'Desktop')
